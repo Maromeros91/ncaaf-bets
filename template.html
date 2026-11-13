@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Visor de edges · NCAAF</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Hanken+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf1ec;--panel:#fff;--ink:#0d2b22;--mute:#5a7468;--rule:#cddbd3;--gold:#b8860b;--gold2:#e8c15a;--chip:#dfeae3;--disp:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;--body:'Hanken Grotesk',system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#0b2219;--panel:#10342a;--ink:#eef1e6;--mute:#8fae9f;--rule:#24503f;--gold:#e8c15a;--chip:#17463a}}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--body);background-image:repeating-linear-gradient(90deg,transparent 0 79px,color-mix(in srgb,var(--ink) 5%,transparent) 79px 80px)}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 60px}
+h1{font:800 clamp(40px,7vw,76px)/.9 var(--disp);margin:0}
+h1.ttl{display:flex;align-items:center;gap:16px}
+.lgl{flex:none;height:clamp(46px,7.5vw,80px);aspect-ratio:1;background:#fff;border-radius:14px;display:grid;place-items:center;padding:7px;box-shadow:0 0 0 1px var(--rule)}
+.lgl img{max-width:100%;max-height:100%;object-fit:contain}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:26px 0 18px}
+.stat{border-left:3px solid var(--gold2);padding:2px 0 2px 12px}
+.stat b{font:800 40px/1 var(--disp);display:block}.stat span{color:var(--mute);font-size:13px}
+.bar{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px 18px;align-items:end}
+label{display:block;font-size:12px;color:var(--mute);margin-bottom:5px;font-weight:500}
+input[type=text],select{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:8px 10px;font:inherit}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.rv{font:800 22px var(--disp);color:var(--gold)}
+button{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--rule);background:var(--chip);color:var(--ink);padding:8px 12px}
+button.on{background:var(--gold2);color:#0d2b22;border-color:var(--gold2);font-weight:700}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;align-items:center}.tools .sp{flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px 16px 14px;overflow:hidden}
+.card.top{border-color:var(--gold2);box-shadow:inset 0 3px 0 var(--gold2)}
+.card.ya{opacity:.6}
+.hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pk{display:flex;gap:10px;align-items:center;min-width:0}
+.lg{flex:none;width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 1px var(--rule)}
+.lg img{width:30px;height:30px;object-fit:contain}
+.pick{font:800 28px/1 var(--disp)}.pick em{font-style:normal;color:var(--gold)}
+.match{color:var(--mute);font-size:13px;margin-top:4px}
+.edge{text-align:right;flex:none}.edge b{font:800 46px/.9 var(--disp);color:var(--gold);display:block}.edge span{font-size:11px;color:var(--mute)}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 4px;font-size:12px}
+.tag{background:var(--chip);border-radius:20px;padding:2px 9px}.tag.g{background:var(--gold2);color:#0d2b22;font-weight:700}.tag.w{font-weight:700}
+.field{position:relative;height:54px;margin:14px 6px 2px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:repeating-linear-gradient(90deg,transparent 0 9.9%,var(--rule) 9.9% 10%)}
+.lnm{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--ink);transform:translateX(-1px)}
+.lnm i{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font:600 11px var(--body);font-style:normal;white-space:nowrap}
+.dot{position:absolute;top:21px;width:13px;height:13px;border-radius:50%;border:2px solid var(--mute);background:var(--panel);transform:translateX(-6px)}
+.dot.v{background:var(--gold2);border-color:var(--gold2)}
+.avg{position:absolute;top:9px;width:14px;height:14px;background:var(--ink);transform:translateX(-7px) rotate(45deg);border-radius:2px;box-shadow:0 0 0 2px var(--panel)}
+.ends{display:flex;justify-content:space-between;font-size:11px;color:var(--mute);margin:3px 6px 8px}
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(52px,1fr));gap:4px;text-align:center}
+.mods div{font:600 13px var(--body);background:var(--chip);border-radius:6px;padding:4px 2px}
+.mods small{display:block;font-size:9.5px;color:var(--mute);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mods .v{outline:1.5px solid var(--gold2)}
+.tw{overflow-x:auto;background:var(--panel);border:1px solid var(--rule);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:1060px;font-size:13px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{color:var(--mute);font-weight:500}td.l,th.l{text-align:left}td.v{color:var(--gold);font-weight:700}
+tr.ya{opacity:.6}
+td .lg{display:inline-grid;width:24px;height:24px;vertical-align:middle;margin-right:6px}td .lg img{width:18px;height:18px}
+.empty{padding:50px;text-align:center;color:var(--mute);grid-column:1/-1}
+.note{color:var(--mute);font-size:12px;margin-top:18px}
+</style></head><body><div class="wrap">
+<h1 class="ttl">__LOGO__<span>Edges de la jornada</span></h1>
+<div class="stats" id="stats"></div>
+<div class="bar">
+<div><label for="q">Buscar equipo</label><input type="text" id="q" placeholder="Ej. Liberty"></div>
+<div id="dyw"><label for="dy">Día</label><select id="dy"><option value="">Todos los días</option></select></div>
+<div id="iniw"><label for="ini">Juegos ya iniciados</label><select id="ini"><option value="h">Ocultar</option><option value="m">Mostrar (atenuados)</option></select></div>
+<div><label>Edge mínimo <span class="rv" id="evl">0.00</span></label><input type="range" id="ed" min="0" max="10" step=".25" value="0"></div>
+<div><label for="cs">Modelos de acuerdo con el pick</label><select id="cs"><option value="0">Cualquiera</option><option value="3">3 o más</option><option value="4">4 o más</option><option value="5">5 o más</option><option value="all">Todos</option></select></div>
+<div><label for="sd">Lado del pick</label><select id="sd"><option value="">Local y visitante</option><option value="H">Solo local</option><option value="R">Solo visitante</option></select></div>
+<div><label for="fv">Pick como</label><select id="fv"><option value="">Favorito o underdog</option><option value="F">Favorito</option><option value="U">Underdog</option></select></div>
+<div><label for="mv">Movimiento de la línea</label><select id="mv"><option value="">Cualquiera</option><option value="a">Hacia el pick</option><option value="c">Contra el pick</option><option value="s">Sin movimiento</option></select></div>
+<div><label for="so">Ordenar por</label><select id="so"><option value="edge">Mayor edge</option><option value="fecha">Más próximo primero</option><option value="cons">Más consenso</option><option value="mov">Mayor movimiento</option><option value="spr">Spread más grande</option></select></div>
+<div><button id="rs">Limpiar filtros</button></div>
+</div>
+<div class="tools"><button id="vc" class="on">Tarjetas</button><button id="vt">Tabla</button><span class="sp"></span><span id="cnt" style="color:var(--mute)"></span></div>
+<div id="out"></div>
+<p class="note">Edge = diferencia entre el promedio de los modelos y la línea. Un modelo “está de acuerdo” cuando se aleja de la línea hacia el mismo lado que el promedio. Las horas se muestran como se capturaron (zona __TZ__) y los juegos se ocultan según el reloj de tu dispositivo. Las líneas no se actualizan solas: corresponden al momento en que se generó la página (__GEN__). Los logos pertenecen a sus universidades.</p>
+</div>
+<script>
+const D=__DATA__,M=D.models,T=D.teams,$=id=>document.getElementById(id);
+const sg=n=>n===0?'PK':(n>0?'+':'-')+Math.abs(n);
+const tm=a=>T[a]||{name:a,logo:''};
+const lg=a=>tm(a).logo?`<span class="lg"><img src="${tm(a).logo}" alt=""></span>`:'';
+const DN=['dom','lun','mar','mié','jue','vie','sáb'],MN=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const cuando=x=>{if(!x.date)return x.time||'';const[y,m,d]=x.date.split('-').map(Number),w=new Date(y,m-1,d).getDay();return `${DN[w]} ${d} ${MN[m-1]}${x.time?', '+x.time:''}`};
+let view='c';
+const DATA=D.games.map(x=>{
+ const v=x.m.filter(z=>z!==null);if(!v.length)return null;
+ const avg=v.reduce((a,b)=>a+b,0)/v.length,d=avg-x.line,home=d>0,open=x.open===null?x.line:x.open,dm=x.line-open,s=Math.sign(d);
+ return {...x,open,avg,edge:Math.abs(d),home_:home,team:home?x.home:x.road,sp:home?-x.line:x.line,n:v.length,
+  ts2:(x.date||'9999-12-31')+' '+(x.time||'99:99'),
+  cons:v.filter(z=>Math.sign(z-x.line)===s&&z!==x.line).length,dm,toward:dm===0?'s':((home?dm>0:dm<0)?'a':'c')}
+}).filter(Boolean).sort((a,b)=>b.edge-a.edge).map((x,i)=>({...x,rank:i+1}));
+const dias=[...new Set(DATA.map(x=>x.date).filter(Boolean))].sort();
+if(!dias.length)$('dyw').style.display='none';
+if(!DATA.some(x=>x.ts))$('iniw').style.display='none';
+dias.forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=cuando({date:d});$('dy').appendChild(o)});
+const empezo=(x,now)=>!!x.ts&&x.ts<=now;
+function filt(){const q=$('q').value.toLowerCase(),e=+$('ed').value,cs=$('cs').value,sd=$('sd').value,fv=$('fv').value,mv=$('mv').value,so=$('so').value,dy=$('dy').value,ini=$('ini').value,now=Date.now();
+ const r=DATA.filter(x=>x.edge>=e&&(ini==='m'||!empezo(x,now))&&(!dy||x.date===dy)&&(cs==='all'?x.cons===x.n:x.cons>=+cs)&&(!q||(x.road+x.home+tm(x.road).name+tm(x.home).name).toLowerCase().includes(q))&&(!sd||(sd==='H')===x.home_)&&(!fv||(fv==='F')===(x.sp<0))&&(!mv||x.toward===mv));
+ const k={edge:x=>-x.edge,fecha:x=>x.ts2+' '+(100-x.edge).toFixed(3).padStart(8,'0'),cons:x=>-x.cons*100-x.edge,mov:x=>-Math.abs(x.dm)*100-x.edge,spr:x=>-Math.abs(x.sp)}[so];
+ return r.sort((a,b)=>{const A=k(a),B=k(b);return A<B?-1:A>B?1:0})}
+const agree=(x,v)=>v!==null&&Math.sign(v-x.line)===Math.sign(x.avg-x.line)&&v!==x.line;
+function dots(x){const w=Math.max(6,2*x.edge+4),lo=x.line-w,hi=x.line+w,P=v=>Math.min(97,Math.max(3,(v-lo)/(hi-lo)*100));
+ return `<div class="field"><div class="lnm" style="left:${P(x.line)}%"><i>${sg(x.line)}</i></div>`+
+ x.m.map((v,i)=>v===null?'':`<div class="dot ${agree(x,v)?'v':''}" style="left:${P(v)}%" title="${M[i]}: ${v}"></div>`).join('')+
+ `<div class="avg" style="left:${P(x.avg)}%" title="Promedio ${x.avg.toFixed(2)}"></div></div><div class="ends"><span>◂ Visitante</span><span>Local ▸</span></div>`}
+function card(x){const w=cuando(x),ya=empezo(x,Date.now());
+ return `<article class="card ${x.rank<=5?'top':''} ${ya?'ya':''}"><div class="hd"><div class="pk">${lg(x.team)}<div><div class="pick">${tm(x.team).name} <em>${sg(x.sp)}</em></div><div class="match">${tm(x.road).name} @ ${tm(x.home).name}</div></div></div>
+ <div class="edge"><b>${x.edge.toFixed(2)}</b><span>edge · #${x.rank}</span></div></div>
+ <div class="meta">${ya?'<span class="tag w">Ya inició</span>':''}${w?`<span class="tag w">${w}</span>`:''}<span class="tag ${x.cons>=x.n-1?'g':''}">${x.cons}/${x.n} modelos</span><span class="tag">${sg(x.open)} → ${sg(x.line)}</span>
+ <span class="tag">${x.toward==='s'?'Sin movimiento':x.toward==='a'?'Mercado hacia el pick':'Mercado contra el pick'}</span></div>
+ ${dots(x)}<div class="mods">${x.m.map((v,i)=>`<div class="${agree(x,v)?'v':''}">${v===null?'—':v.toFixed(1)}<small title="${M[i]}">${M[i]}</small></div>`).join('')}</div></article>`}
+function table(r){const now=Date.now();return `<div class="tw"><table><thead><tr><th>#</th><th class="l">Pick</th><th class="l">Partido</th><th class="l">Cuándo</th><th>Apertura</th><th>Línea</th>${M.map(m=>`<th>${m}</th>`).join('')}<th>Prom.</th><th>Edge</th><th>Acuerdo</th></tr></thead><tbody>`+
+ r.map(x=>`<tr class="${empezo(x,now)?'ya':''}"><td>${x.rank}</td><td class="l v">${lg(x.team)}${tm(x.team).name} ${sg(x.sp)}</td><td class="l">${tm(x.road).name} @ ${tm(x.home).name}</td><td class="l">${cuando(x)||'—'}</td><td>${sg(x.open)}</td><td>${sg(x.line)}</td>${x.m.map(v=>`<td>${v===null?'—':v.toFixed(1)}</td>`).join('')}<td>${x.avg.toFixed(2)}</td><td class="v">${x.edge.toFixed(2)}</td><td>${x.cons}/${x.n}</td></tr>`).join('')+`</tbody></table></div>`}
+function render(){const r=filt();$('evl').textContent=(+$('ed').value).toFixed(2);
+ $('cnt').textContent=`${r.length} de ${DATA.length} partidos`;
+ const mx=r.length?Math.max(...r.map(x=>x.edge)):0,av=r.length?r.reduce((a,x)=>a+x.edge,0)/r.length:0,st=r.filter(x=>x.cons>=x.n-1).length;
+ $('stats').innerHTML=`<div class="stat"><b>${r.length}</b><span>partidos con tus filtros</span></div><div class="stat"><b>${mx.toFixed(2)}</b><span>edge máximo</span></div><div class="stat"><b>${av.toFixed(2)}</b><span>edge promedio</span></div><div class="stat"><b>${st}</b><span>con casi todos los modelos de acuerdo</span></div>`;
+ $('out').innerHTML=!r.length?'<div class="grid"><div class="empty">Ningún partido cumple estos filtros. Baja el edge mínimo, limpia los filtros o muestra los juegos ya iniciados.</div></div>':view==='c'?`<div class="grid">${r.map(card).join('')}</div>`:table(r)}
+['q','ed','cs','sd','fv','mv','so','dy','ini'].forEach(i=>$(i).addEventListener('input',render));
+$('rs').onclick=()=>{$('q').value='';$('ed').value=0;['cs','sd','fv','mv','dy','ini'].forEach(i=>$(i).value=$(i).options[0].value);$('so').value='edge';render()};
+$('vc').onclick=()=>{view='c';$('vc').classList.add('on');$('vt').classList.remove('on');render()};
+$('vt').onclick=()=>{view='t';$('vt').classList.add('on');$('vc').classList.remove('on');render()};
+render();setInterval(render,60000);
+</script></body></html>
