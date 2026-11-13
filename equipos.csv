@@ -8,25 +8,36 @@ Arizona St.,Arizona State Sun Devils,ASU,9,#ffc627
 Arkansas,Arkansas Razorbacks,ARK,8,#a32136
 Arkansas St.,Arkansas State Red Wolves,ARST,2032,#cc092f
 Army,Army Black Knights,ARMY,349,#000000
+Auburn,Auburn Tigers,AUB,2,#002b5c
 BYU,BYU Cougars,BYU,252,#0047ba
 Ball St.,Ball State Cardinals,BALL,2050,#ba0c2f
+Baylor,Baylor Bears,BAY,239,#154734
 Boise St.,Boise State Broncos,BOIS,68,#0033a0
+Boston College,Boston College Eagles,BC,103,#8c2232
 Bowling Green,Bowling Green Falcons,BGSU,189,#fd5000
 Buffalo,Buffalo Bulls,BUF,2084,#005bbb
 California,California Golden Bears,CAL,25,#041e42
 Central Florida,UCF Knights,UCF,2116,#000000
 Central Mich.,Central Michigan Chippewas,CMU,2117,#4c0027
 Charlotte,Charlotte 49ers,CLT,2429,#005035
+Cincinnati,Cincinnati Bearcats,CIN,2132,#000000
+Clemson,Clemson Tigers,CLEM,228,#f56600
 Coastal Carolina,Coastal Carolina Chanticleers,CCU,324,#006f71
+Colorado,Colorado Buffaloes,COLO,38,#cfb87c
+Colorado St.,Colorado State Rams,CSU,36,#004c23
+Connecticut,UConn Huskies,CONN,41,#0c2340
+Delaware,Delaware Blue Hens,DEL,48,#00539f
 Duke,Duke Blue Devils,DUKE,150,#00539b
 East Carolina,East Carolina Pirates,ECU,151,#582c83
 Eastern Mich.,Eastern Michigan Eagles,EMU,2199,#006938
 Florida,Florida Gators,FLA,57,#0021a5
+Florida Atlantic,Florida Atlantic Owls,FAU,2226,#003366
 Florida Intl.,Florida International Panthers,FIU,2229,#091f3f
 Florida St.,Florida State Seminoles,FSU,52,#782f40
 Fresno St.,Fresno State Bulldogs,FRES,278,#b1102b
 Georgia,Georgia Bulldogs,UGA,61,#ba0c2f
 Georgia Southern,Georgia Southern Eagles,GASO,290,#041e42
+Georgia St.,Georgia State Panthers,GAST,2247,#0039a6
 Georgia Tech,Georgia Tech Yellow Jackets,GT,59,#b3a369
 Hawaii,Hawai'i Rainbow Warriors,HAW,62,#005737
 Houston,Houston Cougars,HOU,248,#c8102e
@@ -39,24 +50,33 @@ James Madison,James Madison Dukes,JMU,256,#450084
 Kansas,Kansas Jayhawks,KU,2305,#0051ba
 Kansas St.,Kansas State Wildcats,KSU,2306,#330a57
 Kennesaw St.,Kennesaw State Owls,KENN,338,#fdbb30
+Kent,Kent State Golden Flashes,KENT,2309,#002664
 Kentucky,Kentucky Wildcats,UK,96,#0033a0
 LSU,LSU Tigers,LSU,99,#461d76
 Liberty,Liberty Flames,LIB,2335,#0a254e
 Louisiana Tech,Louisiana Tech Bulldogs,LT,2348,#003087
 Louisiana-Lafayette,Louisiana Ragin' Cajuns,UL,309,#ce181e
+Louisiana-Monroe,UL Monroe Warhawks,ULM,2433,#840029
 Louisville,Louisville Cardinals,LOU,97,#c9001f
 Marshall,Marshall Thundering Herd,MRSH,276,#00b140
 Maryland,Maryland Terrapins,MD,120,#ce1126
 Massachusetts,Massachusetts Minutemen,MASS,113,#881c1c
 Memphis,Memphis Tigers,MEM,235,#004991
+Miami (Fla.),Miami Hurricanes,MIA,2390,#f47423
 Miami (Ohio),Miami (OH) RedHawks,M-OH,193,#c41230
+Michigan,Michigan Wolverines,MICH,130,#00274c
 Michigan St.,Michigan State Spartans,MSU,127,#173f35
+Middle Tenn.,Middle Tennessee Blue Raiders,MTSU,2393,#036eb7
 Minnesota,Minnesota Golden Gophers,MINN,135,#5e0a2f
+Mississippi,Ole Miss Rebels,MISS,145,#13294b
+Mississippi St.,Mississippi State Bulldogs,MSST,344,#5d1725
 Missouri,Missouri Tigers,MIZ,142,#f1b82d
+Missouri St.,Missouri State Bears,MOST,2623,#5e0009
 NC St.,NC State Wolfpack,NCSU,152,#cc0000
 Navy,Navy Midshipmen,NAVY,2426,#00225b
 Nebraska,Nebraska Cornhuskers,NEB,158,#e31937
 Nevada,Nevada Wolf Pack,NEV,2440,#041e42
+New Mexico,New Mexico Lobos,UNM,167,#ba0c2f
 New Mexico St.,New Mexico State Aggies,NMSU,166,#7e141b
 North Carolina,North Carolina Tar Heels,UNC,153,#7bafd4
 North Dakota St.,North Dakota State Bison,NDSU,2449,#01402A
@@ -73,22 +93,37 @@ Oregon,Oregon Ducks,ORE,2483,#00934b
 Oregon St.,Oregon State Beavers,ORST,204,#dc4405
 Penn St.,Penn State Nittany Lions,PSU,213,#061440
 Pittsburgh,Pittsburgh Panthers,PITT,221,#003594
+Purdue,Purdue Boilermakers,PUR,2509,#ceb888
 Rice,Rice Owls,RICE,242,#00205b
+Rutgers,Rutgers Scarlet Knights,RUTG,164,#ce0e2d
+SMU,SMU Mustangs,SMU,2567,#a80000
 Sacramento St.,Sacramento State Hornets,SAC,16,#00573C
+Sam Houston St.,Sam Houston Bearkats,SHSU,2534,#f56423
 San Diego St.,San Diego State Aztecs,SDSU,21,#a6192e
 San Jose St.,San José State Spartans,SJSU,23,#0038a8
 South Alabama,South Alabama Jaguars,USA,6,#00205b
+South Carolina,South Carolina Gamecocks,SC,2579,#73000a
 South Florida,South Florida Bulls,USF,58,#006747
+Southern Miss.,Southern Miss Golden Eagles,USM,2572,#ffc72c
 Stanford,Stanford Cardinal,STAN,24,#8c1515
 Syracuse,Syracuse Orange,SYR,183,#000e54
+TCU,TCU Horned Frogs,TCU,2628,#4d1979
 Temple,Temple Owls,TEM,218,#a41e35
+Tennessee,Tennessee Volunteers,TENN,2633,#ff8200
 Texas,Texas Longhorns,TEX,251,#af5c37
 Texas A&M,Texas A&M Aggies,TA&M,245,#500000
+Texas St.,Texas State Bobcats,TXST,326,#501214
+Texas Tech,Texas Tech Red Raiders,TTU,2641,#da291c
+Texas-San Antonio,UTSA Roadrunners,UTSA,2636,#0c2340
+Toledo,Toledo Rockets,TOL,2649,#0b2240
+Troy St.,Troy Trojans,TROY,2653,#862633
+Tulane,Tulane Green Wave,TULN,2655,#006747
 Tulsa,Tulsa Golden Hurricane,TLSA,202,#003595
 UAB,UAB Blazers,UAB,5,#1a5632
 UCLA,UCLA Bruins,UCLA,26,#2774ae
 UNLV,UNLV Rebels,UNLV,2439,#cf0a2c
 USC,USC Trojans,USC,30,#9d2235
+UTEP,UTEP Miners,UTEP,2638,#ff8200
 Utah,Utah Utes,UTAH,254,#be0000
 Utah St.,Utah State Aggies,USU,328,#0f2439
 Vanderbilt,Vanderbilt Commodores,VAN,238,#000000
@@ -97,21 +132,8 @@ Virginia Tech,Virginia Tech Hokies,VT,259,#6a2c3e
 Wake Forest,Wake Forest Demon Deacons,WAKE,154,#ceb888
 Washington,Washington Huskies,WASH,264,#33006f
 Washington St.,Washington State Cougars,WSU,265,#a60f2d
-Western Kentucky,Western Kentucky Hilltoppers,WKU,98,#e13a3e
-Connecticut,UConn Huskies,CONN,41,#0c2340
-Kent,Kent State Golden Flashes,KENT,2309,#002664
-Mississippi,Ole Miss Rebels,MISS,145,#13294b
-Missouri St.,Missouri State Bears,MOST,2623,#5e0009
-Purdue,Purdue Boilermakers,PUR,2509,#ceb888
-Sam Houston St.,Sam Houston Bearkats,SHSU,2534,#f56423
-South Carolina,South Carolina Gamecocks,SC,2579,#73000a
-Southern Miss.,Southern Miss Golden Eagles,USM,2572,#ffc72c
-Tennessee,Tennessee Volunteers,TENN,2633,#ff8200
-Texas-San Antonio,UTSA Roadrunners,UTSA,2636,#0c2340
-Toledo,Toledo Rockets,TOL,2649,#0b2240
-Troy St.,Troy Trojans,TROY,2653,#862633
-Tulane,Tulane Green Wave,TULN,2655,#006747
-UTEP,UTEP Miners,UTEP,2638,#ff8200
 West Va.,West Virginia Mountaineers,WVU,277,#eaaa00
+Western Kentucky,Western Kentucky Hilltoppers,WKU,98,#e13a3e
 Western Mich.,Western Michigan Broncos,WMU,2711,#532e1f
+Wisconsin,Wisconsin Badgers,WIS,275,#a00000
 Wyoming,Wyoming Cowboys,WYO,2751,#492f24
