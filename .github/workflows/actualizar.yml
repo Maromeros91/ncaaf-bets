@@ -10,6 +10,9 @@ on:
       - "template.html"
       - "build.py"
       - ".github/workflows/actualizar.yml"
+      - "epa_total.csv"
+      - "epa_ofensiva.csv"
+      - "epa_defensiva.csv"
   workflow_dispatch:
 
 concurrency:
