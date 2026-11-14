@@ -1,4 +1,4 @@
-"""Genera site/index.html a partir de partidos.csv y modelos.csv."""
+"""Genera site/index.html a partir de partidos.csv, modelos.csv y los CSV de EPA."""
 import os, io, re, json, base64, difflib, unicodedata, warnings
 import requests, pandas as pd
 from PIL import Image
@@ -232,7 +232,104 @@ for a in aliases:
 if sin_logo:
     aviso("Sin logo", ", ".join(sin_logo))
 
-# ---------- 4) Logo de la liga ----------
+# ---------- 4) Adj EPA/Play (tablas copiadas a mano de gameonpaper.com) ----------
+TOTAL_MEJOR_ALTO = True   # en la tabla total, True si un valor más alto es mejor; cámbialo a False si es al revés
+
+def desdoblar(nombre):
+    """Limpia lo que trae el sitio al copiar: 'ESPN team id 251 TexasTexasTexas' -> ('251', 'Texas')."""
+    n = str(nombre).strip()
+    m = re.match(r"(?i)^ESPN team id\s*(\d+)\s*(.*)$", n)
+    tid, resto = (m.group(1), m.group(2).strip()) if m else (None, n)
+    r = re.fullmatch(r"(.+?)\1+", resto)
+    return tid, (r.group(1).strip() if r else resto)
+
+def leer_epa(ruta, mejor_alto):
+    """Devuelve ({clave: (valor, ranking, nombre)}, total). Las claves son 'id:<ID de ESPN>' y el nombre normalizado."""
+    if not os.path.exists(ruta):
+        return {}, 0
+    try:
+        d = leer_csv(ruta)
+    except SystemExit:
+        aviso("EPA", f"no pude leer {ruta}")
+        return {}, 0
+    d.columns = [limpia(c) for c in d.columns]
+    col_v = next((c for c in d.columns if c.startswith("adjepa")), None)
+    if col_v is None or "team" not in d.columns:
+        aviso("EPA", f"{ruta}: no encontré las columnas 'Team' y 'Adj EPA/Play'. Columnas: {list(d.columns)}")
+        return {}, 0
+    v = pd.to_numeric(d[col_v].astype(str).str.replace("\u2212", "-", regex=False).str.replace(",", ".", regex=False), errors="coerce")
+    par = [desdoblar(x) for x in d["team"]]
+    t = pd.DataFrame({"id": [x[0] for x in par], "t": [x[1] for x in par], "v": v.to_numpy()}).dropna(subset=["v"])
+    t = t[t["t"] != ""].drop_duplicates("t")
+    t["r"] = t["v"].rank(ascending=not mejor_alto, method="min").astype(int)
+    tabla = {}
+    for tid, n, x, r in zip(t["id"], t["t"], t["v"], t["r"]):
+        reg = (float(x), int(r), n)
+        tabla[norm(n)] = reg
+        if tid:
+            tabla[f"id:{tid}"] = reg
+    return tabla, len(t)
+
+TABLAS = {   # clave: (archivo, ¿más alto es mejor?)
+    "t": ("epa_total.csv", TOTAL_MEJOR_ALTO),
+    "o": ("epa_ofensiva.csv", True),
+    "d": ("epa_defensiva.csv", False),
+}
+epa_tablas, epa_n = {}, {}
+for k, (ruta, alto) in TABLAS.items():
+    epa_tablas[k], epa_n[k] = leer_epa(ruta, alto)
+
+def buscar_epa(tabla, alias):
+    r = filas.get(alias)
+    if r and r.get("espn_id") and f"id:{r['espn_id']}" in tabla:
+        return tabla[f"id:{r['espn_id']}"], False          # por ID de ESPN: exacto
+    for k in (norm(alias), norm(OVERRIDES.get(alias, alias))):
+        if k in tabla:
+            return tabla[k], False
+    if r and tabla:
+        nc = norm(r["nombre_completo"])
+        cand = [k for k in tabla if not k.startswith("id:") and nc.startswith(k)]
+        if cand:
+            return tabla[max(cand, key=len)], True
+    return None, False
+
+NOMBRES_EPA = (("t", "total"), ("o", "ataque"), ("d", "defensa"))
+epa_equipo = {}
+if any(epa_tablas.values()):
+    sin_epa, parciales = [], []
+    for a in aliases:
+        reg, parcial_ = {}, False
+        for k, tabla in epa_tablas.items():
+            r_, par_ = buscar_epa(tabla, a)
+            reg[k] = r_
+            parcial_ = parcial_ or (par_ and r_ is not None)
+        if all(v is None for v in reg.values()):
+            sin_epa.append(a)
+            continue
+        epa_equipo[a] = {}
+        for k, r_ in reg.items():
+            epa_equipo[a][k] = r_[0] if r_ else None
+            epa_equipo[a]["r" + k] = r_[1] if r_ else None
+        if parcial_:
+            parciales.append(f"{a} → {next(r_[2] for r_ in reg.values() if r_)}")
+    resumen.append("Adj EPA/Play cargado: " + ", ".join(f"{nom} {epa_n[k]} equipos" for k, nom in NOMBRES_EPA if epa_n[k]) +
+                   f"; {len(epa_equipo)} de {len(aliases)} equipos de la jornada con datos")
+    for k, nom in NOMBRES_EPA:
+        if epa_n[k]:
+            top = sorted({v[2]: v for key, v in epa_tablas[k].items() if not key.startswith("id:")}.values(), key=lambda v: v[1])[:3]
+            resumen.append(f"Los 3 mejores en {nom} según el script (compáralos con el sitio): " +
+                           ", ".join(f"{v[2]} ({v[0]:+.2f})" for v in top))
+    faltan_t = [nom for k, nom in NOMBRES_EPA if not epa_n[k]]
+    if faltan_t:
+        aviso("EPA incompleto", "no se cargó la tabla de: " + ", ".join(faltan_t))
+    if sin_epa:
+        aviso("Sin datos EPA", ", ".join(sin_epa) + ". Los equipos FCS no suelen aparecer en el sitio; "
+              "para otros, revisa que el equipo esté en las tablas copiadas")
+    if parciales:
+        resumen.append("Equipos de EPA emparejados por nombre parcial (revísalos): " + "; ".join(parciales))
+epa_nota = " Adj EPA/Play: gameonpaper.com (captura manual)." if epa_equipo else ""
+
+# ---------- 5) Logo de la liga ----------
 logo_liga = ""
 for nombre in ("logo_ncaaf.png", "logo_ncaaf.jpg", "logo_ncaaf.jpeg", "logo_ncaaf.webp"):
     if os.path.exists(nombre):
@@ -245,15 +342,17 @@ for nombre in ("logo_ncaaf.png", "logo_ncaaf.jpg", "logo_ncaaf.jpeg", "logo_ncaa
 else:
     aviso("Logo de liga", "no encontré logo_ncaaf.png; el título saldrá sin logo")
 
-# ---------- 5) Generar la página ----------
+# ---------- 6) Generar la página ----------
 gen = pd.Timestamp.now(tz=TZ).strftime("%d/%m/%Y %H:%M") + f" ({TZ})"
+datos = {"models": models, "teams": teams_js, "games": games, "epa": epa_equipo, "total_alto": TOTAL_MEJOR_ALTO}
 html = (open("template.html", encoding="utf-8").read()
-        .replace("__DATA__", json.dumps({"models": models, "teams": teams_js, "games": games}, ensure_ascii=False))
-        .replace("__TZ__", TZ).replace("__LOGO__", logo_liga).replace("__GEN__", gen))
+        .replace("__DATA__", json.dumps(datos, ensure_ascii=False))
+        .replace("__TZ__", TZ).replace("__LOGO__", logo_liga)
+        .replace("__GEN__", gen).replace("__EPANOTE__", epa_nota))
 with open(f"{SITE}/index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
-# ---------- 6) Resumen de la corrida ----------
+# ---------- 7) Resumen de la corrida ----------
 r0 = p.iloc[0]
 lineas = [f"## Visor actualizado: {len(games)} partidos, {len(models)} modelos",
           f"Generado: {gen} · tamaño: {len(html)/1e6:.2f} MB", "",
