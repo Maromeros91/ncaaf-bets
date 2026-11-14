@@ -119,7 +119,7 @@ function epaPanel(x){
  const bt=ven('t',alto),bo=ven('o',true),bd=ven('d',false);
  const cel=(v,r,best)=>`<span class="c ${best?'best':''}"><b>${fe(v)}</b>${r?`<small>#${r}</small>`:''}</span>`;
  const fila=(al,e,lado)=>`<span class="t">${tm(al).abbr||tm(al).name}</span>${cel(e.t,e.rt,bt===lado)}${cel(e.o,e.ro,bo===lado)}${cel(e.d,e.rd,bd===lado)}`;
- return `<div class="epa"><span class="h">Adj EPA/Play</span><span class="h">Total${alto?'':' ↓'}</span><span class="h">Ataque</span><span class="h" title="En defensa, menos es mejor">Defensa ↓</span>${fila(x.road,A,'r')}${fila(x.home,B,'h')}</div>`}
+  return `<div class="epa"><span class="h">Adj EPA/Play</span><span class="h">Net${alto?'':' ↓'}</span><span class="h">Off</span><span class="h" title="En defensa, menos es mejor">Def</span>${fila(x.road,A,'r')}${fila(x.home,B,'h')}</div>`}
 function card(x){const w=cuando(x),ya=empezo(x,Date.now());
  return `<article class="card ${x.rank<=5?'top':''} ${ya?'ya':''}"><div class="hd"><div class="pk">${lg(x.team)}<div><div class="pick">${tm(x.team).name} <em>${sg(x.sp)}</em></div><div class="match">${tm(x.road).name} @ ${tm(x.home).name}</div></div></div>
  <div class="edge"><b>${x.edge.toFixed(2)}</b><span>edge · #${x.rank}</span></div></div>
